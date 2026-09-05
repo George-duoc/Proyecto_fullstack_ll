@@ -1,0 +1,18 @@
+
+.imagen-uniforme {
+    width: 100%;
+    height: 600px; 
+    object-fit: cover;
+    object-position: center;
+}
+
+/* */
+
+.titulo-reliquias {
+    font-size: 2.5rem; /* Hace la letra más grande */
+    font-weight: 800; /* Hace la letra súper negrita/gruesa */
+    color: #2c3e50; /* Un tono azul oscuro/grisáceo muy elegante */
+    text-transform: uppercase; /* Convierte todo el texto a MAYÚSCULAS automáticamente */
+    letter-spacing: 2px; /* Separa un poco las letras para darle un toque premium */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15); /* Añade una sombra muy sutil de fondo */
+}
