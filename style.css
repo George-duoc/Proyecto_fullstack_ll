@@ -13,4 +13,12 @@
     object-position: center;
 }
 
+.site-footer {
+    width: 100%;
+}
+
+.footer-logo {
+    max-width: 220px;
+}
+
 
