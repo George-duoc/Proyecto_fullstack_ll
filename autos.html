@@ -7,6 +7,7 @@
     <title>Autos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="autos.html">Autos</a>
+                            <a class="nav-link active" aria-current="page" href="autos.html">Catálogo</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="login.html">Iniciar sesión</a>
@@ -43,94 +44,125 @@
     </header>
     <main class="container mt-5">
         <h1 class="text-center mb-4">Autos Disponibles</h1>
+        
         <div class="row row-cols-1 row-cols-md-3 g-4">
+            
             <div class="col">
                 <div class="card h-100">
-                    <img src="https://preview.redd.it/nissan-skyline-gt-r-r34-one-of-the-most-iconic-japanese-v0-wdc7erjx1plf1.jpeg?width=1080&crop=smart&auto=webp&s=4526eac04a81103a98ab921dd571b940c41b4da8"
-                        class="card-img-top" alt="Nissan Skyline GT-R R34">
+                    <img src="https://preview.redd.it/nissan-skyline-gt-r-r34-one-of-the-most-iconic-japanese-v0-wdc7erjx1plf1.jpeg?width=1080&crop=smart&auto=webp&s=4526eac04a81103a98ab921dd571b940c41b4da8" class="card-img-top imagen-catalogo" alt="Nissan Skyline GT-R R34">
                     <div class="card-body">
                         <h5 class="card-title">Nissan Skyline GT-R R34</h5>
                         <p class="card-text">Lo mejor de la ingeniería JDM, disfrutalo solo en Automotora X.</p>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">$10.000.000</small>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">$10.000.000</small>
+                        <button class="btn btn-success btn-sm btn-comprar"
+                        data-id="1"
+                        data-nombre="Nissan Skyline GT-R R34"
+                        data-precio="10000000">
+                        Comprar
+                        </button>
                     </div>
                 </div>
             </div>
+            
             <div class="col">
                 <div class="card h-100">
-                    <img src="https://hips.hearstapps.com/hmg-prod/images/img-2033-jpg-64bec5598090f.jpg?crop=0.872xw:0.655xh;0.0833xw,0.186xh&resize=1400:*"
-                        class="card-img-top" alt="Ford Mustang GT">
+                    <img src="https://hips.hearstapps.com/hmg-prod/images/img-2033-jpg-64bec5598090f.jpg?crop=0.872xw:0.655xh;0.0833xw,0.186xh&resize=1400:*" class="card-img-top imagen-catalogo" alt="Ford Mustang GT">
                     <div class="card-body">
                         <h5 class="card-title">Ford Mustang GT</h5>
-                        <p class="card-text">Si entiendes lo que significa motor Coyote V8 de 4ta generación, esta es tu
-                            opción.</p>
+                        <p class="card-text">Si entiendes lo que significa motor Coyote V8 de 4ta generación, esta es tu opción.</p>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">$12.999.990</small>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">$12.999.990</small>
+                        <button class="btn btn-success btn-sm btn-comprar"
+                        data-id="2"
+                        data-nombre="Ford Mustang GT"
+                        data-precio="12999990">
+                        Comprar
+                        </button>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card h-100">
-                    <img src="https://www.lamborghinilongisland.com/imagetag/2343/9/l/New-2019-Lamborghini-Huracan-RWD-Coupe-1553631677.jpg"
-                        class="card-img-top" alt="Lamborghini Huracan 2019">
+                    <img src="https://www.lamborghinilongisland.com/imagetag/2343/9/l/New-2019-Lamborghini-Huracan-RWD-Coupe-1553631677.jpg" class="card-img-top imagen-catalogo" alt="Lamborghini Huracan 2019">
                     <div class="card-body">
-                        <h5 class="card-title">Lamborghini Huracan 2019</h5>
-                        <p class="card-text">El superdeportivo definitivo; furia pura de un v10 atmosférico de 640
-                            caballos de fuerza, inigualable.</p>
+                        <h5 class="card-title">Lamborghini Huracán</h5>
+                        <p class="card-text">El superdeportivo definitivo; furia pura de un v10 atmosférico de 640 caballos de fuerza, inigualable.</p>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">$15.000.000</small>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">$15.000.000</small>
+                        <button class="btn btn-success btn-sm btn-comprar"
+                        data-id="3"
+                        data-nombre="Lamborghini Huracan"
+                        data-precio="15000000">
+                        Comprar
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="https://www.motortrend.com/files/668d77e37dd43700087fa89b/006-2025-porsche-911-carrera.jpg"
-                    class="card-img-top" alt="Porsche 911 Carrera 2025">
-                <div class="card-body">
-                    <h5 class="card-title">Porsche 911 Carrera 2025</h5>
-                    <p class="card-text">El Porsche 911 es un automóvil deportivo de lujo icónico, con motor trasero
-                        bóxer, diseño 2+2 plazas y una combinación única de deportividad y uso diario.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">$13.999.990</small>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="https://tse1.mm.bing.net/th/id/OIP.gIa0FAn8o0JhYYXHqi9vQQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-                    class="card-img-top" alt="Honda type r 2021">
-                <div class="card-body">
-                    <h5 class="card-title">Honda type r 202</h5>
-                    <p class="card-text">El Civic Type R usa un motor 2.0 turbo que supera los 300 hp, con una entrega
-                        de potencia lineal y rápida.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">$9.999.990</small>
+            
+            
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://www.motortrend.com/files/668d77e37dd43700087fa89b/006-2025-porsche-911-carrera.jpg" class="card-img-top imagen-catalogo" alt="Porsche 911 Carrera 2025">
+                    <div class="card-body">
+                        <h5 class="card-title">Porsche 911 Carrera 2025</h5>
+                        <p class="card-text">El Porsche 911 es un automóvil deportivo de lujo icónico, con motor trasero bóxer, diseño 2+2 plazas y una combinación única de deportividad y uso diario.</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">$13.999.990</small>
+                        <button class="btn btn-success btn-sm btn-comprar"
+                        data-id="4"
+                        data-nombre="Porsche 911"
+                        data-precio="13999990">
+                        Comprar
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="https://cdn.motor1.com/images/mgl/VzMq0z/s1/bugatti-chiron-1500.jpg" class="card-img-top"
-                    alt="Bugatti Chiron 2023">
-                <div class="card-body">
-                    <h5 class="card-title">Bugatti Chiron 2023</h5>
-                    <p class="card-text">El Bugatti Chiron es un hiperdeportivo de lujo con motor W16 de 8 litros y
-                        1.500 CV, capaz de alcanzar hasta 420 km/h.</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">$20.000.000</small>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.gIa0FAn8o0JhYYXHqi9vQQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" class="card-img-top imagen-catalogo" alt="Honda type r 2021">
+                    <div class="card-body">
+                        <h5 class="card-title">Honda Civic Type R 2021</h5>
+                        <p class="card-text">El Civic Type R usa un motor 2.0 turbo que supera los 300 hp, con una entrega de potencia lineal y rápida.</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">$9.999.990</small>
+                        <button class="btn btn-success btn-sm btn-comprar"
+                        data-id="5"
+                        data-nombre="Honda Civic Type R"
+                        data-precio="9999990">
+                        Comprar
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://cdn.motor1.com/images/mgl/VzMq0z/s1/bugatti-chiron-1500.jpg" class="card-img-top imagen-catalogo" alt="Bugatti Chiron 2023">
+                    <div class="card-body">
+                        <h5 class="card-title">Bugatti Chiron 2023</h5>
+                        <p class="card-text">El Bugatti Chiron es un hiperdeportivo de lujo con motor W16 de 8 litros y 1.500 CV, capaz de alcanzar hasta 420 km/h.</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted fw-bold">$20.000.000</small>
+                        <button class="btn btn-success btn-sm btn-comprar"
+                        data-id="6"
+                        data-nombre="Bugatti Chiron"
+                        data-precio="20000000">
+                        Comprar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
+        
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
