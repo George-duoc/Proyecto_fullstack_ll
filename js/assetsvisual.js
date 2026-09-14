@@ -1,46 +1,47 @@
 function NavBarGeneric(){
+   const navbar = document.querySelector("#navbar");
     if(!navbar) return;
    navbar.innerHTML=`
-   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Home</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Autos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Motocicletas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Camionetas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">¿Quiénes somos?</a>
-          </li>
-        </ul>
-        <div class="d-flex">
-        <a href="#" class="btn btn-outline-dark d-flex align-items-center">
-          <i class="bi bi-cart3 me-2"></i> Carrito
-        </a>
-      </div>
-      </div>
-    </div>
+   <nav class="navbar hatecss navbar-expand-lg bg-black" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home.html">Automotora X</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="login.html">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="nosotros.html">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="autos.html">Catálogo</a>
+                        </li>
+                    </ul>
 
-    </nav>`}
+                    <div class="d-flex">
+                        <a href="carrito.html" class="btn btn-outline-light d-flex align-items-center">
+                            <i class="bi bi-cart3 me-2"></i> Carrito
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </nav>`}
 
 function FooterSitio(){
-    if(!footer) return;
-   footer.innerHTML=`
-  
-    <footer class="bg-dark text-white py-5">
+    const footer = document.querySelector("#footer");
+    if (!footer) return;
+
+    footer.innerHTML = `
+      <footer class="hatecss bg-dark text-white py-5">
       <div class="container">
         <div class="row">
           <div class="col-md-3">
-            <img src="img/Logo-removebg-preview.png" class="img-fluid" alt="Logo">
+            <img src="Logo-removebg-preview.png" class="img-fluid" alt="Logo">
              <p class="mt-2">
               
              </p>
@@ -70,8 +71,8 @@ function FooterSitio(){
     
 
 
-    </footer>`}
-
+    </footer>
+    `;}
     NavBarGeneric();
     FooterSitio();
 
