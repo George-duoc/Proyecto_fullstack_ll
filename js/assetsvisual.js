@@ -25,6 +25,7 @@ function NavBarGeneric(){
                     <div class="d-flex">
                         <a href="carrito.html" class="btn btn-outline-light d-flex align-items-center">
                             <i class="bi bi-cart3 me-2"></i> Carrito
+                            <span id="contador-carrito" class="badge text-bg-danger ms-2">0</span>
                         </a>
                     </div>
 
@@ -73,6 +74,10 @@ function FooterSitio(){
 
     </footer>
     `;}
+
+
+
+    
     NavBarGeneric();
     FooterSitio();
 
