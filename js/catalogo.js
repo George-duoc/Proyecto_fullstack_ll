@@ -1,12 +1,11 @@
-
-let carritostore = JSON.parse(localStorage.getItem('miCarrito')) || [];
+let carrito = JSON.parse(localStorage.getItem('miCarrito')) || [];
 
 const botonesComprar = document.querySelectorAll('.btn-comprar');
 const contadorCarrito = document.getElementById('contador-carrito');
 
 
 if (contadorCarrito) {
-    contadorCarrito.textContent = carritostore.length;
+    contadorCarrito.textContent = carrito.length;
 }
 
 botonesComprar.forEach(boton => {
@@ -22,12 +21,12 @@ botonesComprar.forEach(boton => {
         };
 
 
-        carritostore.push(auto);
+        carrito.push(auto);
 
-        contadorCarrito.textContent = carritostore.length;
+        contadorCarrito.textContent = carrito.length;
         
-        console.log("Carrito actual:", carritostore);
+        console.log("Carrito actual:", carrito);
 
-        localStorage.setItem('miCarrito', JSON.stringify(carritostore));
+        localStorage.setItem('miCarrito', JSON.stringify(carrito));
     });
 });

@@ -1,12 +1,16 @@
 const contenedorCarrito = document.getElementById('contenedor-carrito');
 const totalCarrito = document.getElementById('total-carrito');
+const contadorCarrito = document.getElementById('contador-carrito'); 
 
 let carrito = JSON.parse(localStorage.getItem('miCarrito')) || [];
-
 
 function renderizarCarrito() {
     contenedorCarrito.innerHTML = '';
     let totalPrecio = 0;
+
+    if (contadorCarrito) {
+        contadorCarrito.textContent = carrito.length;
+    }
 
     if (carrito.length === 0) {
         contenedorCarrito.innerHTML = '<div class="alert alert-secondary text-center">Tu carrito está vacío ): ¡Ve al catálogo a seleccionar una reliquia!</div>';
@@ -14,9 +18,7 @@ function renderizarCarrito() {
         return;
     }
 
-
     carrito.forEach((auto, indice) => {
-        
         totalPrecio += auto.precio;
 
         const itemHtml = `
@@ -39,9 +41,7 @@ function renderizarCarrito() {
 
 function eliminarDelCarrito(indice) {
     carrito.splice(indice, 1);
-    
     localStorage.setItem('miCarrito', JSON.stringify(carrito));
-    
     renderizarCarrito();
 }
 
