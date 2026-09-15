@@ -3,14 +3,29 @@ const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const loginMessage = document.getElementById('loginMessage');
 const togglePassword = document.getElementById('togglePassword');
+const loginToast = document.getElementById('loginToast');
+const toastMessage = document.getElementById('toastMessage');
 
-togglePassword.addEventListener('click', () => {
-    const isPasswordVisible = passwordInput.type === 'text';
-    passwordInput.type = isPasswordVisible ? 'password' : 'text';
-    togglePassword.querySelector('i').className = isPasswordVisible
-        ? 'bi bi-eye'
-        : 'bi bi-eye-slash';
-});
+function showToast(message, type = 'success') {
+    if (!loginToast || !toastMessage) return;
+
+    loginToast.classList.remove('bg-success', 'bg-danger');
+    loginToast.classList.add(type === 'success' ? 'bg-success' : 'bg-danger');
+    toastMessage.textContent = message;
+
+    const toast = bootstrap.Toast.getOrCreateInstance(loginToast);
+    toast.show();
+}
+
+if (togglePassword) {
+    togglePassword.addEventListener('click', () => {
+        const isPasswordVisible = passwordInput.type === 'text';
+        passwordInput.type = isPasswordVisible ? 'password' : 'text';
+        togglePassword.querySelector('i').className = isPasswordVisible
+            ? 'bi bi-eye'
+            : 'bi bi-eye-slash';
+    });
+}
 
 loginForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -20,10 +35,12 @@ loginForm.addEventListener('submit', (event) => {
     if (usernameInput.value !== 'admin' || passwordInput.value !== '1234') {
         loginMessage.classList.add('alert-danger');
         loginMessage.textContent = 'Credenciales incorrectas. Usa admin / 1234 para probar la demo.';
+        showToast('Inicio de sesión no aprobado', 'danger');
         usernameInput.focus();
         return;
     }
 
     loginMessage.classList.add('alert-success');
     loginMessage.textContent = 'Inicio de sesión aprobado.';
+    showToast('Inicio de sesión aprobado', 'success');
 });
