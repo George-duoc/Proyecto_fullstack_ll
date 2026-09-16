@@ -13,6 +13,19 @@
     object-position: center;
 }
 
+#contenedor {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+}
+
+#contenedor > [class*="col-"] {
+    width: 100%;
+    max-width: none;
+    flex: 0 0 auto;
+}
+
 .site-footer {
     width: 100%;
 }

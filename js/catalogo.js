@@ -1,5 +1,9 @@
 let carrito = JSON.parse(localStorage.getItem('miCarrito')) || [];
 
+const contenedor = document.getElementById('contenedor');
+if (contenedor) {
+    contenedor.classList.add('row', 'g-4');
+}
 
 let StockVeh = [
         {
