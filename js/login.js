@@ -43,4 +43,8 @@ loginForm.addEventListener('submit', (event) => {
     loginMessage.classList.add('alert-success');
     loginMessage.textContent = 'Inicio de sesión aprobado.';
     showToast('Inicio de sesión aprobado', 'success');
+    usuario={sesion: "admin",
+            rol: "admin"}
+            guardarSesion(usuario)
+        setTimeout(() => window.location.href = "admin.html", 500);
 });

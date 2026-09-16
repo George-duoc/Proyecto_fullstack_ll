@@ -1,53 +1,73 @@
+
 let carrito = JSON.parse(localStorage.getItem('miCarrito')) || [];
 
 const contenedor = document.getElementById('contenedor');
 if (contenedor) {
     contenedor.classList.add('row', 'g-4');
 }
-
+let StockVeh
+if (!localStorage.getItem("StockVeh")) {
+    
 let StockVeh = [
-        {
-            id: 1,
-            nombre: "Nissan Skyline GT-R R34",
-            flavortext:"Lo mejor de la ingeniería JDM, disfrutalo solo en Automotora X.",
-            precio: 10000000,
-            imagen: "https://preview.redd.it/nissan-skyline-gt-r-r34-one-of-the-most-iconic-japanese-v0-wdc7erjx1plf1.jpeg?width=1080&crop=smart&auto=webp&s=4526eac04a81103a98ab921dd571b940c41b4da8"
-        }, {
-            id: 2,
-            nombre: "Ford Mustang GT",
-            flavortext:"Si entiendes lo que significa motor Coyote V8 de 4ta generación, esta es tu opción.",
-            precio: 10000000,
-            imagen: "https://hips.hearstapps.com/hmg-prod/images/img-2033-jpg-64bec5598090f.jpg?crop=0.872xw:0.655xh;0.0833xw,0.186xh&resize=1400:*"
-        }, {
-            id: 3,
-            nombre: "Lamborghini Huracán",
-            flavortext:"El superdeportivo definitivo; furia pura de un v10 atmosférico de 640 caballos de fuerza, inigualable.",
-            precio: 10000000,
-            imagen: "https://www.lamborghinilongisland.com/imagetag/2343/9/l/New-2019-Lamborghini-Huracan-RWD-Coupe-1553631677.jpg"
-        }, {
-            id: 4,
-            nombre: "Porsche 911 Carrera 2025",
-            flavortext:"El Porsche 911 es un automóvil deportivo de lujo icónico, con motor trasero bóxer, diseño 2+2 plazas y una combinación única de deportividad y uso diario.",
-            precio: 13999990,
-            imagen: "https://www.motortrend.com/files/668d77e37dd43700087fa89b/006-2025-porsche-911-carrera.jpg"
-        },{
-            id: 5,
-            nombre: "Bugatti Chiron 2023",
-            flavortext:"El Bugatti Chiron es un hiperdeportivo de lujo con motor W16 de 8 litros y 1.500 CV, capaz de alcanzar hasta 420 km/h.",
-            precio: 20000000,
-            imagen: "https://cdn.motor1.com/images/mgl/VzMq0z/s1/bugatti-chiron-1500.jpg"
-        },{
-            id: 6,
-            nombre: "Honda Civic Type R 2021",
-            flavortext:"El Civic Type R usa un motor 2.0 turbo que supera los 300 hp, con una entrega de potencia lineal y rápida.",
-            precio: 9999990,
-            imagen: "https://tse1.mm.bing.net/th/id/OIP.gIa0FAn8o0JhYYXHqi9vQQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
-        }
-    ];
-
+    {
+        id: 1,
+        nombre: "Nissan Skyline GT-R R34",
+        flavortext: "Lo mejor de la ingeniería JDM, disfrutalo solo en Automotora X.",
+        precio: 10000000,
+        imagen: "https://preview.redd.it/nissan-skyline-gt-r-r34-one-of-the-most-iconic-japanese-v0-wdc7erjx1plf1.jpeg?width=1080&crop=smart&auto=webp&s=4526eac04a81103a98ab921dd571b940c41b4da8"
+    },
+    {
+        id: 2,
+        nombre: "Ford Mustang GT",
+        flavortext: "Si entiendes lo que significa motor Coyote V8 de 4ta generación, esta es tu opción.",
+        precio: 10000000,
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/img-2033-jpg-64bec5598090f.jpg?crop=0.872xw:0.655xh;0.0833xw,0.186xh&resize=1400:*"
+    },
+    {
+        id: 3,
+        nombre: "Lamborghini Huracán",
+        flavortext: "El superdeportivo definitivo; furia pura de un v10 atmosférico de 640 caballos de fuerza, inigualable.",
+        precio: 10000000,
+        imagen: "https://www.lamborghinilongisland.com/imagetag/2343/9/l/New-2019-Lamborghini-Huracan-RWD-Coupe-1553631677.jpg"
+    },
+    {
+        id: 4,
+        nombre: "Porsche 911 Carrera 2025",
+        flavortext: "El Porsche 911 es un automóvil deportivo de lujo icónico, con motor trasero bóxer, diseño 2+2 plazas y una combinación única de deportividad y uso diario.",
+        precio: 13999990,
+        imagen: "https://www.motortrend.com/files/668d77e37dd43700087fa89b/006-2025-porsche-911-carrera.jpg"
+    },
+    {
+        id: 5,
+        nombre: "Bugatti Chiron 2023",
+        flavortext: "El Bugatti Chiron es un hiperdeportivo de lujo con motor W16 de 8 litros y 1.500 CV, capaz de alcanzar hasta 420 km/h.",
+        precio: 20000000,
+        imagen: "https://cdn.motor1.com/images/mgl/VzMq0z/s1/bugatti-chiron-1500.jpg"
+    },
+    {
+        id: 6,
+        nombre: "Honda Civic Type R 2021",
+        flavortext: "El Civic Type R usa un motor 2.0 turbo que supera los 300 hp, con una entrega de potencia lineal y rápida.",
+        precio: 9999990,
+        imagen: "https://tse1.mm.bing.net/th/id/OIP.gIa0FAn8o0JhYYXHqi9vQQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+    }
+];
+localStorage.setItem("StockVeh", JSON.stringify(StockVeh));
+console.log("usando valor default")
+}
+else{
+    StockVeh = JSON.parse(localStorage.getItem("StockVeh"));
+    console.log("tabla cargada")
+   
+StockVeh=StockVeh.filter(producto => producto.id) //Añadido por un error previo. Filtra todos los objetos sin ID y los filtra.
+  
+    localStorage.setItem("StockVeh", JSON.stringify(StockVeh));
+  StockVeh.forEach(producto => {console.log(producto.nombre+"ID:"+producto.id)})
+}
 
 
 function renderProductos(lista) {
+    if (!contenedor){return;}else{
 contenedor.innerHTML = "";
 lista.forEach(producto => {
 contenedor.innerHTML += `
@@ -73,7 +93,7 @@ contenedor.innerHTML += `
             </div>
 
 `;
-});
+});}
 }
 
 renderProductos(StockVeh);

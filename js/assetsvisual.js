@@ -1,5 +1,7 @@
 function NavBarGeneric(){
    const navbar = document.querySelector("#navbar");
+   const Lasesion=obtenerSesion()
+    const sesionadmin = Lasesion?.rol === "admin";
     if(!navbar) return;
    navbar.innerHTML=`
    <nav class="navbar hatecss navbar-expand-lg bg-black" data-bs-theme="dark">
@@ -20,7 +22,17 @@ function NavBarGeneric(){
                         <li class="nav-item">
                             <a class="nav-link" href="autos.html">Catálogo</a>
                         </li>
+                        
+                       
                     </ul>
+  <ul class="navbar-nav ms-auto">
+ ${sesionadmin?  `
+                            <li class="nav-item"><span class="nav-link text-white d-flex align-items-center TEST2">${Lasesion.sesion}</span></li>
+                            <li class="nav-item"><a class="btn btn-outline-warning d-flex align-items-center TEST2" href="admin.html">Administración</a></li>
+                            <li class="nav-item"><button id="btnCerrarSesionNavbar" class="btn btn-danger  d-flex align-items-center ">Cerrar sesión</button></li>
+                        `:`     <li class="nav-item"><a class="btn btn-outline-light d-flex align-items-center TEST2" href="login.html">Administración</a></li>` }
+</ul>
+
 
                     <div class="d-flex">
                         <a href="carrito.html" class="btn btn-outline-light d-flex align-items-center">
@@ -31,7 +43,9 @@ function NavBarGeneric(){
 
                 </div>
             </div>
-        </nav>`}
+        </nav>`
+        document.querySelector("#btnCerrarSesionNavbar")?.addEventListener("click", acabarSesion); //Acaben con mi sesión.
+   }
 
 function FooterSitio(){
     const footer = document.querySelector("#footer");
@@ -76,8 +90,13 @@ function FooterSitio(){
     `;}
 
 
+function acabarSesion() {
+    alert("Cerrando sesión.")
+    guardarSesion();
+window.location.href = "home.html";
+}
 
-    
+ 
     NavBarGeneric();
     FooterSitio();
 

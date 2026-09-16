@@ -1,6 +1,7 @@
 const contenedorCarrito = document.getElementById('contenedor-carrito');
 const totalCarrito = document.getElementById('total-carrito');
 const contadorCarrito = document.getElementById('contador-carrito'); 
+const btnComprar = document.getElementById('btn-pagar'); 
 
 let carrito = JSON.parse(localStorage.getItem('miCarrito')) || [];
 
@@ -44,5 +45,13 @@ function eliminarDelCarrito(indice) {
     localStorage.setItem('miCarrito', JSON.stringify(carrito));
     renderizarCarrito();
 }
+btnComprar.addEventListener("click", () => {
+    
+    if (carrito.length === 0) {alert("No se puede realizar la compra sin productos.");return;}
+
+localStorage.removeItem('miCarrito')
+  alert("Compra finalizada.")
+window.location.reload();
+});
 
 renderizarCarrito();

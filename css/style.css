@@ -13,19 +13,6 @@
     object-position: center;
 }
 
-#contenedor {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(220px, 1fr));
-    gap: 1rem;
-    align-items: stretch;
-}
-
-#contenedor > [class*="col-"] {
-    width: 100%;
-    max-width: none;
-    flex: 0 0 auto;
-}
-
 .site-footer {
     width: 100%;
 }
@@ -35,6 +22,9 @@
 }
 .TEST {
     margin-bottom: 3cm;
+
+}.TEST2 {
+    margin-right: 2%;
 
 }
 body {
@@ -50,4 +40,16 @@ main {
 .hatecss{
     position: sticky;
     object-position: center;
+}
+.col {
+  float: left;
+  width: 50%;
+}
+.image-container img {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+
+  min-width: 100%;
+  min-height: 100%;
 }
