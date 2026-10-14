@@ -4,11 +4,16 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
+import useVehiculos from '../dependencies/stockmanager.jsx'
 
 export default function Header() {
     const Lasesion = { rol: "cliente", sesion: "George" }; 
     const sesionadmin = Lasesion?.rol === "admin";
-
+ const {
+        vehiculos,
+        carrito,
+        setCarrito
+    } = useVehiculos();//Dolor de cabeza
     const acabarSesion = () => {
         console.log("Cerrando sesión de prueba...");
     };
@@ -60,7 +65,7 @@ export default function Header() {
                         <Link className="btn btn-outline-light d-flex align-items-center" to="/carrito">
                             <i className="bi bi-cart3 me-2"></i> Carrito
                             <Badge bg="danger" className="ms-2" id="contador-carrito">
-                                0
+                               {carrito.length}
                             </Badge>
                         </Link>
                     </div>
