@@ -15,8 +15,13 @@ export default
         setCarrito
     } = useVehiculos();
     const agregarAlCarrito = (producto) => {
-        producto.id=carrito.length+1
-        const nuevoCarrito = [...carrito, producto];
+        let productonuevo={
+        id: carrito.length+1,
+        nombre: producto.nombre,
+        flavortext: producto.flavortext,
+        precio: producto.precio,
+        imagen: producto.imagen};
+        const nuevoCarrito = [...carrito, productonuevo];
         
         setCarrito(nuevoCarrito); 
         localStorage.setItem('miCarrito', JSON.stringify(nuevoCarrito));

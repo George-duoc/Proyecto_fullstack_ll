@@ -23,8 +23,8 @@ function Carrito() {
     };
      const removerdecarrito = (producto) => {
        
-        const nuevoCarrito = carrito.splice(producto.id,1);
-        
+        const nuevoCarrito = carrito.filter((produ) => produ.id !== producto.id);
+        console.log(producto.id)
         setCarrito(nuevoCarrito); 
         localStorage.setItem('miCarrito', JSON.stringify(nuevoCarrito));
         console.log("Cómo puede hacer tanto calor con 17 grados");
@@ -65,7 +65,7 @@ function Carrito() {
                         <div className="d-flex justify-content-between mb-3">
                             <span>Total:</span>
                             <span className="fs-4 fw-bold text-success">
-                                $<span id="total-carrito">0</span></span>
+                                $<span id="total-carrito">{carrito.reduce((i, prod) => i + prod.precio, 0)}</span></span>
                         </div>
                         <Button className="btn-dark w-100 fw-bold" onClick={() => realizarcompra()}>Proceder a pagar</Button>
                     </Card.Body>
