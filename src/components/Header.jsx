@@ -64,7 +64,7 @@ export default function Header() {
                     <div className="d-flex">
                         <Link className="btn btn-outline-light d-flex align-items-center" to="/carrito">
                             <i className="bi bi-cart3 me-2"></i> Carrito
-                            <Badge bg="danger" className="ms-2" id="contador-carrito">
+                            <Badge bg="danger" className="ms-2">
                                {carrito.length}
                             </Badge>
                         </Link>

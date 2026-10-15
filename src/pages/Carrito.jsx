@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container'
+import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
 import useVehiculos from '../dependencies/stockmanager.jsx'
 export default
@@ -13,13 +15,20 @@ function Carrito() {
         carrito,
         setCarrito
     } = useVehiculos();
+    
+        const [alertData, setAlertData] = useState({ show: false, variant: '', message: '' });
      const realizarcompra = () => {
        
         const nuevoCarrito = [];
-        
+        if(carrito.length<=0){
+         setAlertData({ show: true, variant: 'danger', message: 'No se puede realizar la compra con el carrito vacío' })
+        //console.log("Carrito está vacío")
+    return;}
         setCarrito(nuevoCarrito); 
         localStorage.setItem('miCarrito', JSON.stringify(nuevoCarrito));
-        console.log("Cómo puede hacer tanto calor con 17 grados");
+        alert("La compra se ha realizado de forma correcta.")
+         setAlertData({ show: true, variant: 'success', message: 'Compra finalizada. ¡Gracias por elegir nuestro servicio!' })
+        //console.log("Cómo puede hacer tanto calor con 17 grados");;
     };
      const removerdecarrito = (producto) => {
        
@@ -72,6 +81,11 @@ function Carrito() {
                 </Card>
             </Col>
         </Row>
+        {alertData.show && (
+                                        <Alert variant={alertData.variant} className="mt-3 mb-0">
+                                            {alertData.message}
+                                        </Alert>
+                                    )}
     </Container>
     </> 
     )
