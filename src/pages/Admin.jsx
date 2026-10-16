@@ -11,30 +11,23 @@ import Form from 'react-bootstrap/Form';
 export default function Admin() {
     const navigate = useNavigate();
 
-    // 1. ESTADOS DE LA APLICACIÓN
     const [vehiculos, setVehiculos] = useState([]);
     
-    // Estados para controlar los Modales (Visibilidad)
     const [showModalForm, setShowModalForm] = useState(false);
     const [showModalDelete, setShowModalDelete] = useState(false);
     
-    // Estados para guardar los datos temporales
     const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState(null);
     const [formData, setFormData] = useState({ id: null, nombre: '', flavortext: '', precio: '', imagen: '' });
 
-    // 2. PROTECCIÓN DE RUTA Y CARGA DE DATOS (Se ejecuta al abrir la página)
     useEffect(() => {
         const stockGuardado = JSON.parse(localStorage.getItem("StockVeh")) || [];
         setVehiculos(stockGuardado);
     }, [navigate]);
 
-    // 3. LÓGICA DE FORMULARIO (Crear y Editar)
     const abrirModalFormulario = (producto = null) => {
         if (producto) {
-            // Modo Editar: Llenamos el formulario con los datos del auto
             setFormData(producto);
         } else {
-            // Modo Crear: Limpiamos el formulario
             setFormData({ id: null, nombre: '', flavortext: '', precio: '', imagen: '' });
         }
         setShowModalForm(true);
@@ -43,7 +36,6 @@ export default function Admin() {
     const guardarProducto = (e) => {
         e.preventDefault();
         
-        // Validación básica
         if (!formData.nombre || !formData.flavortext || !formData.precio || !formData.imagen) {
             alert("No pueden haber campos vacíos.");
             return;
@@ -51,38 +43,31 @@ export default function Admin() {
 
         let nuevoStock;
         if (formData.id) {
-            // EDITAR: Buscamos el auto y lo reemplazamos
             nuevoStock = vehiculos.map(v => v.id === formData.id ? formData : v);
             alert("Producto actualizado.");
         } else {
-            // CREAR: Generamos un ID nuevo y lo agregamos a la lista
             const nuevoId = vehiculos.length ? Math.max(...vehiculos.map(v => v.id)) + 1 : 1;
             const nuevoAuto = { ...formData, id: nuevoId, precio: Number(formData.precio) };
             nuevoStock = [...vehiculos, nuevoAuto];
             alert("Producto agregado.");
         }
 
-        // Actualizamos memoria y disco duro
         setVehiculos(nuevoStock);
         localStorage.setItem("StockVeh", JSON.stringify(nuevoStock));
         setShowModalForm(false);
     };
 
-    // 4. LÓGICA DE ELIMINACIÓN
     const abrirModalEliminar = (producto) => {
         setVehiculoSeleccionado(producto);
         setShowModalDelete(true);
     };
 
     const confirmarEliminacion = () => {
-        // Filtramos la lista para dejar todos MENOS el que queremos borrar
         const nuevoStock = vehiculos.filter(v => v.id !== vehiculoSeleccionado.id);
         
-        // Actualizamos memoria y disco duro
         setVehiculos(nuevoStock);
         localStorage.setItem("StockVeh", JSON.stringify(nuevoStock));
         
-        // También lo borramos del carrito si estaba ahí
         let carrito = JSON.parse(localStorage.getItem("miCarrito")) || [];
         carrito = carrito.filter(item => item.id !== vehiculoSeleccionado.id);
         localStorage.setItem("miCarrito", JSON.stringify(carrito));
@@ -92,7 +77,6 @@ export default function Admin() {
         alert("Vehículo eliminado.");
     };
 
-    // 5. CERRAR SESIÓN
     const cerrarSesion = () => {
         alert("Cerrando sesión.");
         localStorage.removeItem("sesion");
@@ -109,7 +93,6 @@ export default function Admin() {
                 </div>
             </div>
 
-            {/* RENDERIZADO DE LA GRILLA DE AUTOS */}
             <Row className="g-4">
                 {vehiculos.map((producto) => (
                     <Col sm={6} lg={4} key={producto.id}>
@@ -131,7 +114,6 @@ export default function Admin() {
                 ))}
             </Row>
 
-            {/* MODAL DE FORMULARIO (Crear/Editar) */}
             <Modal show={showModalForm} onHide={() => setShowModalForm(false)} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>{formData.id ? 'Editar producto' : 'Nuevo producto'}</Modal.Title>
@@ -172,7 +154,6 @@ export default function Admin() {
                 </Form>
             </Modal>
 
-            {/* MODAL DE ELIMINACIÓN */}
             <Modal show={showModalDelete} onHide={() => setShowModalDelete(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmar eliminación</Modal.Title>

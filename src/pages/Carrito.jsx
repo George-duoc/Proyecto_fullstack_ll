@@ -8,14 +8,12 @@ import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
 
 export default function Carrito({ carrito, eliminarDelCarrito, vaciarCarrito }) {
-    // Matemática automática: suma todos los precios del arreglo en tiempo real
     const totalPagar = carrito.reduce((acumulador, auto) => acumulador + Number(auto.precio), 0);
 
     return (
         <Container as="main" className="mt-5 min-vh-100">
             <h2 className="mb-4 text-uppercase fw-bold">Tu Carrito</h2>
 
-            {/* Condición: Si el carrito está vacío, mostramos la alerta. Si no, mostramos la lista. */}
             {carrito.length === 0 ? (
                 <Alert variant="secondary" className="text-center">
                     Tu carrito está vacío ): ¡Ve al catálogo a seleccionar una reliquia!
@@ -24,10 +22,8 @@ export default function Carrito({ carrito, eliminarDelCarrito, vaciarCarrito }) 
                 </Alert>
             ) : (
                 <Row>
-                    {/* Columna Izquierda: Lista de Autos */}
                     <Col md={8}>
                         <ListGroup>
-                            {/* Dibujamos la lista usando .map() */}
                             {carrito.map((auto, index) => (
                                 <ListGroup.Item 
                                     key={index} 
@@ -51,7 +47,6 @@ export default function Carrito({ carrito, eliminarDelCarrito, vaciarCarrito }) 
                         </ListGroup>
                     </Col>
 
-                    {/* Columna Derecha: Tarjeta de Pago */}
                     <Col md={4}>
                         <Card className="shadow-sm">
                             <Card.Body>
@@ -66,7 +61,6 @@ export default function Carrito({ carrito, eliminarDelCarrito, vaciarCarrito }) 
                                 <Button 
                                     variant="dark" 
                                     className="w-100 fw-bold" 
-                                    // Ejecutamos la compra inyectada desde App.jsx
                                     onClick={vaciarCarrito}
                                 >
                                     Proceder a pagar
