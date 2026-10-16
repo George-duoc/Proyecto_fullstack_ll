@@ -50,47 +50,36 @@ const stockInicial = [
     }
 ];
 
-export default function Catalogo() {
-
-    const [vehiculos, setVehiculos] = useState(stockInicial);
-    const [carrito, setCarrito] = useState([]);
+// Recibe la función mágicamente desde App.jsx
+export default function Catalogo({ agregarAlCarrito }) {
+    const [vehiculos, setVehiculos] = useState([]);
 
     useEffect(() => {
-        const carritoGuardado = JSON.parse(localStorage.getItem('miCarrito')) || [];
-        setCarrito(carritoGuardado);
-        
         const stockGuardado = JSON.parse(localStorage.getItem('StockVeh'));
-        if (stockGuardado) {
+        if (stockGuardado && stockGuardado.length > 0) {
             setVehiculos(stockGuardado.filter(p => p.id));
         } else {
+            setVehiculos(stockInicial);
             localStorage.setItem("StockVeh", JSON.stringify(stockInicial));
         }
     }, []);
 
-    const agregarAlCarrito = (producto) => {
-
-        const nuevoCarrito = [...carrito, producto];
-        
-        setCarrito(nuevoCarrito); 
-        localStorage.setItem('miCarrito', JSON.stringify(nuevoCarrito));
-        console.log("Agregado:", producto.nombre);
-    };
-
     return (
-        <Container as="section" className="my-5">
+        <Container as="section" className="my-5 min-vh-100">
             <Row className="g-4">
                 {vehiculos.map((producto) => (
                     <Col sm={6} lg={4} key={producto.id}>
-                        <Card className="h-100">
-                            <Card.Img variant="top" src={producto.imagen} alt={producto.nombre} className="imagen-catalogo" />
+                        <Card className="h-100 shadow-sm">
+                            <Card.Img variant="top" src={producto.imagen} alt={producto.nombre} className="object-fit-cover" height="250" />
                             <Card.Body>
                                 <Card.Title>{producto.nombre}</Card.Title>
                                 <Card.Text>{producto.flavortext}</Card.Text>
                             </Card.Body>
                             <Card.Footer className="d-flex justify-content-between align-items-center">
                                 <small className="text-muted fw-bold">
-                                    ${producto.precio.toLocaleString("es-CL")}
+                                    ${Number(producto.precio).toLocaleString("es-CL")}
                                 </small>
+                                {/* Al hacer clic, ejecuta la función que vive en App.jsx */}
                                 <Button variant="dark" size="sm" onClick={() => agregarAlCarrito(producto)}>
                                     Comprar
                                 </Button>
@@ -102,3 +91,9 @@ export default function Catalogo() {
         </Container>
     );
 }
+
+
+
+
+
+

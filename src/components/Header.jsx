@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 
-export default function Header() {
+export default function Header({carrito}) {
     const Lasesion = { rol: "cliente", sesion: "George" }; 
     const sesionadmin = Lasesion?.rol === "admin";
 
@@ -59,8 +59,9 @@ export default function Header() {
                     <div className="d-flex">
                         <Link className="btn btn-outline-light d-flex align-items-center" to="/carrito">
                             <i className="bi bi-cart3 me-2"></i> Carrito
+                           
                             <Badge bg="danger" className="ms-2" id="contador-carrito">
-                                0
+                                {carrito ? carrito.length : 0}
                             </Badge>
                         </Link>
                     </div>
