@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
@@ -6,180 +7,256 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import useVehiculos from '../dependencies/stockmanager.jsx'
-import { stockInicial } from '../data/productinic.js'
-export default function admin() {
+import Alert from 'react-bootstrap/Alert';
+import useVehiculos from '../dependencies/useVehiculos.jsx';
+import { stockInicial } from '../data/productinic.js';
 
-      const DummyFunc = (producto) => {
-       
-        console.log("TODO");
-    };
+const formularioVacio = { nombre: '', flavortext: '', precio: '', imagen: '' };
+
+export default function Admin() {
+  const { vehiculos, setVehiculos, setCarrito } = useVehiculos();
   const [show, setShow] = useState(false);
+  const [vehiculoEditando, setVehiculoEditando] = useState(null);
+  const [formulario, setFormulario] = useState(formularioVacio);
+  const [mensaje, setMensaje] = useState(null);
+  const navigate = useNavigate();
 
-     const handleClose = () => {console.log("FALSE")
-        setShow(false);}
-  const handleShow = () => {console.log("TRUE")
-    setShow(true) };
-    const {
-        vehiculos,
-        carrito,
-        setCarrito,
-        setVehiculos
-    } = useVehiculos();
-
-     const removerdelaexistencia = (producto) => {
-       
-        const nuevostock = vehiculos.filter((produ) => produ.id !== producto.id);
-        console.log(producto.id)
-        setVehiculos(nuevostock); 
-        localStorage.setItem('StockVeh', JSON.stringify(nuevostock));
-        console.log("Cómo puede hacer tanto calor con 17 grados");
-    };
-    const reiniciarstock = () => {
-       
-        setVehiculos(stockInicial); 
-        localStorage.setItem('StockVeh', JSON.stringify(stockInicial));
-        console.log("Se ha reiniciado el universo");
-    };
-  const manejodeproducto = (producto) => {  
- const datos = {
-        nombre: producto.nombre,
-        flavortext: producto.flavortext,
-        precio: producto.precio,
-        imagen: producto.imagen
-    };
-
-    const productos = vehiculos //RECORDAR CAMBIAR MENCIONES DE PRODUCTOS A QUE REFERENCIEN DIRECTAMENTE VARIABLE VEHÍCULOS
-    const nombreDuplicado = productos.some(p =>
-        (p.nombre) === datos.nombre && p.id !== productoEditandoId
+  const abrirFormulario = (vehiculo = null) => {
+    setVehiculoEditando(vehiculo);
+    setFormulario(
+      vehiculo
+        ? {
+            nombre: vehiculo.nombre,
+            flavortext: vehiculo.flavortext,
+            precio: String(vehiculo.precio),
+            imagen: vehiculo.imagen,
+          }
+        : formularioVacio,
     );
+    setShow(true);
+  };
 
-    if(!producto.nombre || !producto.flavortext || !producto.precio || !producto.imagen){
+  const guardarVehiculo = (evento) => {
+    evento.preventDefault();
+    const precio = Number(formulario.precio);
+    const imagenValida = (() => {
+      try {
+        const url = new URL(formulario.imagen);
+        return url.protocol === 'http:' || url.protocol === 'https:';
+      } catch {
+        return false;
+      }
+    })();
 
-alert("No pueden haber campos vacíos.");
-        return;
+    if (!Number.isFinite(precio) || precio <= 0 || !imagenValida) {
+      setMensaje({
+        variant: 'danger',
+        texto: 'Ingresa un precio positivo y una URL de imagen http/https válida.',
+      });
+      return;
     }
+
+    const nombreDuplicado = vehiculos.some(
+      (vehiculo) =>
+        vehiculo.nombre.trim().toLowerCase() ===
+          formulario.nombre.trim().toLowerCase() &&
+        vehiculo.id !== vehiculoEditando?.id,
+    );
     if (nombreDuplicado) {
-        
-alert("Este vehículo ya existe.");
-        return;
+      setMensaje({
+        variant: 'danger',
+        texto: 'Ya existe un vehículo con ese nombre.',
+      });
+      return;
     }
 
-    if (productoEditandoId) {
-        const indice = productos.findIndex(p => p.id === productoEditandoId);
-        productos[indice] = { ...productos[indice], ...datos };
-    
-alert("Producto actualizado.");
-//window.location.reload();
+    const datos = {
+      nombre: formulario.nombre.trim(),
+      flavortext: formulario.flavortext.trim(),
+      precio,
+      imagen: formulario.imagen.trim(),
+    };
 
+    if (vehiculoEditando) {
+      setVehiculos((actuales) =>
+        actuales.map((vehiculo) =>
+          vehiculo.id === vehiculoEditando.id
+            ? { ...vehiculo, ...datos }
+            : vehiculo,
+        ),
+      );
+      setMensaje({ variant: 'success', texto: 'Vehículo actualizado.' });
     } else {
-      
-const nuevoId = vehiculos.length ? Math.max(...vehiculos.map(p => p.id)) + 1 : 1;
-    vehiculos.push({id:nuevoId,...datos});
-     
-alert("Producto agregado.");
-//window.location.reload();
-
+      setVehiculos((actuales) => [
+        ...actuales,
+        {
+          id: Math.max(0, ...actuales.map((vehiculo) => vehiculo.id)) + 1,
+          ...datos,
+        },
+      ]);
+      setMensaje({ variant: 'success', texto: 'Vehículo agregado.' });
     }
-    localStorage.setItem("StockVeh", JSON.stringify(vehiculos));
-  vehiculos.forEach(producto => {console.log(producto.nombre+"ID:"+producto.id)})
-    modalProducto.hide();
-   // limpiarFormulario();
-};
 
-//////////////////////////////////////////////////FUNCIONES//////////////////////////////////////////////////
+    setShow(false);
+  };
 
+  const eliminarVehiculo = (id) => {
+    setVehiculos((actuales) =>
+      actuales.filter((vehiculo) => vehiculo.id !== id),
+    );
+    setCarrito((actuales) =>
+      actuales.filter((producto) => producto.id !== id),
+    );
+    setMensaje({ variant: 'success', texto: 'Vehículo eliminado.' });
+  };
 
+  const cerrarSesion = () => {
+    localStorage.removeItem('sesion');
+    window.dispatchEvent(new Event('session-change'));
+    navigate('/login');
+  };
 
-    return(<>
-        <Modal className="fade"  size="lg" aria-hidden="true" tabIndex="-1" show={show} onHide={handleClose}>
-        <Modal.Dialog><Modal.Body>
-            <Modal.Header className="modal-header"><h2 className="modal-title h5" id="tituloModalProducto">Nuevo producto</h2><Button className="btn-close"  onClick={() => handleShow }></Button></Modal.Header>
-              <Form id="formProducto" novalidate>
-                <div class="modal-body"><div class="row g-3">
-                    <Col className="md-6"><Form.Label for="nombreCarro" class="form-label">Nombre</Form.Label>  <Form.Control
-                type="email"
-                placeholder="..."
-                autoFocus
-                required
-              />
-             <div id="errorNombreProducto" class="invalid-feedback">Ingresa al menos 3 caracteres.</div></Col>
-                    <Col className="md-6"><Form.Label for="flavorText" class="form-label">Texto descriptivo</Form.Label>
-                     <Form.Control
-                type="email"
-                placeholder="..."
-                
-                required
-              />
-              <div class="invalid-feedback">Ingresa al menos 3 caracteres.</div></Col>
-                    <Col className="md-6"><Form.Label for="precioCarro" class="form-label">Precio</Form.Label>
-                     <Form.Control
-                type="email"
-                placeholder="..."
-                
-                required
-              />
-              <div class="invalid-feedback">El precio debe ser mayor que 0.</div></Col>
-                    <Col className="col-12"><Form.Label for="imagenCarro" class="form-label">URL de imagen</Form.Label> <Form.Control
-                type="email"
-                placeholder="..."
-                
-                required
-              />
-                    <div class="invalid-feedback">Ingresa una URL http/https válida.</div></Col>
-                </div></div>
-                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button><button type="submit" class="btn btn-success">Guardar producto</button></div>
-            </Form>
-            
-        </Modal.Body></Modal.Dialog>
-    </Modal>
-    <Modal className="fade" tabIndex="-1" aria-hidden="false">
-        <Modal.Dialog className="modal-dialog"><div className="modal-content">
-            <Modal.Header className="modal-header"><h2 className="modal-title h5">Confirmar eliminación</h2><button type="button" className="btn-close" data-bs-dismiss="modal"></button></Modal.Header>
-            <Modal.Body className="modal-body">¿Está seguro de eliminar <strong id="nombreProductoEliminar"></strong>? También se quitará del carrito si estaba agregado.</Modal.Body>
-            <Modal.Footer className="modal-footer"><Button type="button" variant="secondary" data-bs-dismiss="modal">Cancelar</Button><Button id="confirmarEliminarProducto" type="button" variant="danger">Eliminar</Button></Modal.Footer>
-        </div></Modal.Dialog>
-    </Modal>
-
-    <Container className="mt-5"> 
+  return (
+    <>
+      <Container as="section" className="my-5">
         <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-            <div><h1 className="fw-bold mb-1">Panel de Administración</h1></div>
-            <div className="d-flex gap-2">
-                <Button id="btn-nuevocarro" variant="success" onClick={() => handleShow()}>+ Agregar Vehículo</Button>
-            <Button variant="dark" onClick={ reiniciarstock}>
-                Reiniciar stock</Button>
-            <Button id="btnCerrarSesion" variant="danger">Cerrar sesión</Button></div>
+          <h1 className="fw-bold mb-0">Panel de administración</h1>
+          <div className="d-flex gap-2 flex-wrap">
+            <Button variant="success" onClick={() => abrirFormulario()}>
+              + Agregar vehículo
+            </Button>
+            <Button
+              variant="outline-dark"
+              onClick={() => setVehiculos(stockInicial)}
+            >
+              Reiniciar catálogo
+            </Button>
+            <Button variant="danger" onClick={cerrarSesion}>
+              Cerrar sesión
+            </Button>
+          </div>
         </div>
-         </Container>
 
+        {mensaje && (
+          <Alert
+            variant={mensaje.variant}
+            dismissible
+            onClose={() => setMensaje(null)}
+          >
+            {mensaje.texto}
+          </Alert>
+        )}
 
-           <Container as="section" className="my-5">
-            <Row className="g-4">
-                {vehiculos.map((producto) => (
-                    <Col sm={6} lg={4} key={producto.id}>
-                        <Card className="h-100">
-                            <Card.Img variant="top" src={producto.imagen} alt={producto.nombre} className="imagen-catalogo" />
-                            <Card.Body>
-                                <Card.Title>{producto.nombre}</Card.Title>
-                                <Card.Text>{producto.flavortext}</Card.Text>
-                            </Card.Body>
-                            <Card.Footer className="d-flex justify-content-between align-items-center">
-                                <small className="text-muted fw-bold">
-                                    ${producto.precio.toLocaleString("es-CL")}
-                                </small>
-                                <Button variant="dark" size="sm" onClick={() => DummyFunc(producto)}>
-                                    Editar
-                                </Button>
-                                <Button variant="dark" size="sm" onClick={() => removerdelaexistencia(producto)}>
-                                    Eliminar
-                                </Button>
-                                
-                            </Card.Footer>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Container>
-        </>
-    )
-};
+        <Row className="g-4">
+          {vehiculos.map((vehiculo) => (
+            <Col sm={6} lg={4} key={vehiculo.id}>
+              <Card className="h-100">
+                <Card.Img
+                  variant="top"
+                  src={vehiculo.imagen}
+                  alt={vehiculo.nombre}
+                  className="imagen-catalogo"
+                />
+                <Card.Body>
+                  <Card.Title>{vehiculo.nombre}</Card.Title>
+                  <Card.Text>{vehiculo.flavortext}</Card.Text>
+                </Card.Body>
+                <Card.Footer className="d-flex justify-content-between align-items-center gap-2 flex-wrap">
+                  <strong>
+                    ${vehiculo.precio.toLocaleString('es-CL')}
+                  </strong>
+                  <div className="d-flex gap-2">
+                    <Button
+                      variant="outline-primary"
+                      size="sm"
+                      onClick={() => abrirFormulario(vehiculo)}
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => eliminarVehiculo(vehiculo.id)}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                </Card.Footer>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+
+      <Modal show={show} onHide={() => setShow(false)} centered>
+        <Form onSubmit={guardarVehiculo}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {vehiculoEditando ? 'Editar vehículo' : 'Agregar vehículo'}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="mb-3" controlId="vehiculoNombre">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                required
+                minLength={3}
+                value={formulario.nombre}
+                onChange={(evento) =>
+                  setFormulario({ ...formulario, nombre: evento.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="vehiculoDescripcion">
+              <Form.Label>Descripción</Form.Label>
+              <Form.Control
+                required
+                as="textarea"
+                rows={3}
+                value={formulario.flavortext}
+                onChange={(evento) =>
+                  setFormulario({
+                    ...formulario,
+                    flavortext: evento.target.value,
+                  })
+                }
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="vehiculoPrecio">
+              <Form.Label>Precio</Form.Label>
+              <Form.Control
+                required
+                type="number"
+                min="1"
+                value={formulario.precio}
+                onChange={(evento) =>
+                  setFormulario({ ...formulario, precio: evento.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group controlId="vehiculoImagen">
+              <Form.Label>URL de imagen</Form.Label>
+              <Form.Control
+                required
+                type="url"
+                placeholder="https://..."
+                value={formulario.imagen}
+                onChange={(evento) =>
+                  setFormulario({ ...formulario, imagen: evento.target.value })
+                }
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Cancelar
+            </Button>
+            <Button variant="success" type="submit">
+              Guardar
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+    </>
+  );
+}

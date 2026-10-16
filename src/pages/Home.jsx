@@ -50,8 +50,6 @@ export default function Home() {
                     </Carousel.Item>
                 </Carousel>
             </section>
-            
-            <div id="footer"></div>
         </main>
     )
 }
