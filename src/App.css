@@ -1,0 +1,77 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+}
+
+.imagen-uniforme {
+  width: 100%;
+  height: clamp(260px, 55vw, 650px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.imagen-catalogo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.site-footer {
+  width: 100%;
+  margin-top: auto;
+}
+
+.footer-logo {
+  display: block;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.login-container {
+  min-height: 65vh;
+}
+@media (max-width: 767.98px) {
+  .imagen-catalogo {
+    height: 200px;
+  }
+}
+.TEST {
+    margin-bottom: 3cm;
+
+}.TEST2 {
+    margin-right: 2%;
+
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  margin: 0;         
+}
+main {
+  flex: 1;  
+}
+
+.hatecss{
+    position: sticky;
+    object-position: center;
+}
+.col {
+  float: left;
+  width: 50%;
+}
+.image-container img {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+
+  min-width: 100%;
+  min-height: 100%;
+}
